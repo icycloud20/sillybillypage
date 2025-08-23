@@ -10,12 +10,14 @@ export default function ShowcasePage() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
 
+  // unique tags (sorted)
   const tags = useMemo(() => {
     const s = new Set<string>();
     projects.forEach(p => p.tags.forEach(t => s.add(t)));
     return Array.from(s).sort();
   }, []);
 
+  // filter by search + selected tags
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     let list = projects.filter(
@@ -25,7 +27,9 @@ export default function ShowcasePage() {
         p.description.toLowerCase().includes(q) ||
         p.tags.some(t => t.toLowerCase().includes(q))
     );
-    if (selected.length) list = list.filter(p => selected.every(t => p.tags.includes(t)));
+    if (selected.length) {
+      list = list.filter(p => selected.every(t => p.tags.includes(t)));
+    }
     return list;
   }, [search, selected]);
 
@@ -35,6 +39,7 @@ export default function ShowcasePage() {
 
   return (
     <main className="container isolate pt-24 sm:pt-32">
+      {/* Controls */}
       <Reveal className="relative z-[9999]">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
           <input
@@ -44,6 +49,7 @@ export default function ShowcasePage() {
             onChange={e => setSearch(e.target.value)}
           />
 
+          {/* Tag filter */}
           <div className="filter-wrapper shrink-0">
             <button className="filter-toggle" onClick={() => setOpen(v => !v)}>
               {selected.length ? `Tags (${selected.length})` : 'Filter by tag'} {open ? '▾' : '▸'}
@@ -63,7 +69,7 @@ export default function ShowcasePage() {
                         <span className="dd-checkbox-box">
                           {checked ? (
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                              <polyline points="20 6 9 17 4 12" />
+                            <polyline points="20 6 9 17 4 12" />
                             </svg>
                           ) : (
                             <svg width="12" height="12" />
@@ -79,6 +85,7 @@ export default function ShowcasePage() {
             )}
           </div>
 
+          {/* Selected chips */}
           {selected.length > 0 && (
             <div className="flex gap-2 flex-wrap">
               {selected.map(t => (
@@ -89,14 +96,24 @@ export default function ShowcasePage() {
         </div>
       </Reveal>
 
+      {/* Grid */}
       <Reveal className="relative z-[1]">
         {filtered.length === 0 ? (
           <div className="opacity-70 py-10 text-center">No results. Try a different search or clear tags.</div>
         ) : (
-          <div className="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(440px,1fr))]">
-            {filtered.map(p => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
+          // only widen THIS area on xl+ so 3×440px fits; rest of the site stays the same
+          <div className="mx-auto w-full xl:max-w-[1440px]">
+            <div
+              className="
+                grid gap-6 justify-center
+                grid-cols-1 sm:grid-cols-2
+                xl:[grid-template-columns:repeat(3,minmax(440px,1fr))]
+              "
+            >
+              {filtered.map(p => (
+                <ProjectCard key={p.slug} project={p} />
+              ))}
+            </div>
           </div>
         )}
       </Reveal>
