@@ -180,8 +180,8 @@ function Section({
 function CardsGrid({ items }: { items: typeof projects }) {
   return (
     // Only widen THIS area on xl+ so 3×440px + gaps fits; rest of the site stays the same
-    <div className="mx-auto w-full xl:max-w-[1400px] px-2">
-      <div className="grid gap-6 justify-center [grid-template-columns:repeat(auto-fit,minmax(440px,1fr))]">
+    <div className="mx-auto w-full xl:max-w-[1500px] px-2">
+      <div className="grid gap-4 justify-center [grid-template-columns:repeat(auto-fit,minmax(440px,1fr))]">
         {items.map((p) => (
           <ProjectCard key={p.slug} project={p} />
         ))}
