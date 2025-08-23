@@ -69,7 +69,7 @@ export const projects: Project[] = [
 
   {
     slug: 'mega-rolls-chest',                              // url: /showcase/my-demo
-    title: 'Satisfiyng Chest Open',
+    title: 'Satisfying Chest Open',
     description: 'A satisfying chest opening effect with item notifications',
     tags: ['Mega Rolls', 'Simulator'],                    // used by filter/search
     media: {
