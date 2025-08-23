@@ -179,12 +179,7 @@ function Section({
 
 function CardsGrid({ items }: { items: typeof projects }) {
   return (
-    <div className="
-      grid
-      gap-x-2           /* ← horizontal gap */
-      gap-y-5          /* ← vertical gap */
-      [grid-template-columns:repeat(auto-fit,minmax(440px,1fr))]
-    ">
+    <div className="grid !gap-x-2 gap-y-6 [grid-template-columns:repeat(auto-fit,minmax(440px,1fr))]">
       {items.map(p => <ProjectCard key={p.slug} project={p} />)}
     </div>
   );
