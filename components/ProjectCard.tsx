@@ -94,11 +94,11 @@ export default function ProjectCard({ project }: { project: Project }) {
           )}
         </div>
 
-        {/* Bottom gradient + text overlay (shows on hover) */}
-        <div className="showcase-overlay pointer-events-none">
-          <div>
-            <h3 className="font-semibold text-xl mb-1">{title}</h3>
-            <p className="opacity-80 text-sm">{description}</p>
+        <div className="showcase-overlay">
+          <div className="min-w-0">
+            <h3 className="font-semibold text-xl mb-1 truncate">{title}</h3>
+            <p className="opacity-80 text-sm truncate">{description}</p>
+
             <div className="mt-3 flex gap-2 flex-wrap">
               {tags.map(t => (
                 <span key={t} className="tag chip">#{t}</span>
