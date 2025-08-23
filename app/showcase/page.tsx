@@ -179,9 +179,16 @@ function Section({
 
 function CardsGrid({ items }: { items: typeof projects }) {
   return (
-    // Only widen THIS area on xl+ so 3×440px + gaps fits; rest of the site stays the same
-    <div className="mx-auto w-full xl:max-w-[1800px] px-2">
-      <div className="grid gap-6 justify-center [grid-template-columns:repeat(auto-fit,minmax(420px,1fr))]">
+    // widen only the grid area on xl so 3×440 + gaps fits
+    <div className="mx-auto w-full xl:max-w-[1440px]">
+      <div
+        className="
+          grid justify-center
+          gap-y-6 gap-x-4
+          grid-cols-1 sm:grid-cols-2
+          xl:[grid-template-columns:repeat(3,minmax(440px,1fr))]
+        "
+      >
         {items.map((p) => (
           <ProjectCard key={p.slug} project={p} />
         ))}
