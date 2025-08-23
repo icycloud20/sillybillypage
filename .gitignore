@@ -1,0 +1,9 @@
+# deps & builds
+node_modules/
+.next/
+out/
+.pnpm-store/
+
+# misc
+.DS_Store
+*.log

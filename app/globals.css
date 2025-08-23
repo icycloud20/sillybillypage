@@ -1,0 +1,241 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+
+/* Base scale & smooth scroll */
+html { scroll-behavior: smooth; } html,body{ font-size:19px; }
+body { @apply bg-primary-dark text-primary-text; }
+
+@layer base {
+  html {
+    font-size: 16px;                 /* default scale */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.container { @apply mx-auto max-w-7xl px-6; }
+.container {
+  max-width: 1100px;             /* adjust to taste: 1000–1240 is a good range */
+  padding-inline: clamp(16px, 5vw, 40px);
+  margin-inline: auto;
+}
+.section { @apply py-16; }
+
+/* ——— compact header ——— */
+.header-compact .brand {
+  font-size: clamp(18px, 1.6vw, 22px);         /* logo text a bit smaller */
+  letter-spacing: 0.2px;
+}
+.header-compact .nav a,
+.header-compact .nav button {
+  font-size: 0.9rem;                            /* smaller nav labels */
+  padding: .4rem .7rem;                         /* tighter pills */
+}
+
+/* ——— compact pricing ——— */
+.pricing-compact .work-card {
+  padding: 0.75rem 0.9rem;                      /* less padding in cards */
+}
+.pricing-compact .tier-title {                  /* Basic / Standard / Premium */
+  font-size: 1.125rem;
+  margin-bottom: .25rem;
+}
+.pricing-compact .price {                       /* $ line */
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+.pricing-compact .robux {                       /* ~1,429R$ line */
+  font-size: .95rem;
+}
+.pricing-compact ul {                           /* feature bullets */
+  gap: .35rem;
+  margin-bottom: 1rem;
+}
+
+/* ——— compact FAQ ——— */
+.faq-compact details {
+  padding: .75rem 1rem;
+  border-radius: .75rem;
+}
+.faq-compact summary {
+  font-size: .95rem;
+}
+.faq-compact .answer {
+  font-size: .9rem;
+  opacity: .9;
+}
+
+
+/* Starry background (two parallax layers) */
+body::before{
+  content:''; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10px 10px, rgba(255,255,255,.12) 1px, transparent 1px),
+    radial-gradient(1.2px 1.2px at 50px 80px, rgba(255,255,255,.10) 1px, transparent 1px),
+    radial-gradient(1.5px 1.5px at 130px 140px, rgba(255,255,255,.12) 1px, transparent 1px),
+    radial-gradient(1.2px 1.2px at 200px 20px, rgba(255,255,255,.10) 1px, transparent 1px),
+    radial-gradient(1.2px 1.2px at 90px 200px, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 220px 220px, 280px 280px, 340px 340px, 420px 420px, 500px 500px;
+  animation: star-drift 60s linear infinite; opacity:.9; filter: drop-shadow(0 0 2px rgba(255,255,255,.15));
+}
+body::after{
+  content:''; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 30px 30px, rgba(255,255,255,.10) 1px, transparent 1px),
+    radial-gradient(1px 1px at 160px 110px, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 260px 260px, 360px 360px;
+  animation: star-drift-2 120s linear infinite; opacity:.6;
+}
+@keyframes star-drift { 0%{background-position:0 0,0 0,0 0,0 0,0 0} 100%{background-position:200px 400px,-260px 260px,320px -320px,-400px -200px,120px -90px} }
+@keyframes star-drift-2 { 0%{background-position:0 0,0 0} 100%{background-position:-260px 260px,360px -360px} }
+
+/* Nav (floating pill) */
+.nav-wrapper{ @apply fixed top-6 left-1/2 -translate-x-1/2 z-50 flex px-6 py-3 bg-primary-surface border border-border rounded-full shadow-md; backdrop-filter: blur(8px); transform-origin: top center; transition: transform .2s ease;  overflow: visible; }
+.nav-item { @apply mx-1 px-5 py-2 rounded-full font-medium; transition: transform .18s ease, box-shadow .18s ease; }
+.nav-item:hover { transform: translateY(-2px) scale(1.03); } .nav-item:active { transform: translateY(0) scale(0.97); }
+.nav-item.active { background: linear-gradient(120deg, #FF9F1C, #FFD43B); color: #0b0b0c; }
+.nav-divider{
+  display:block;
+  width:3px;                 /* thinner */
+  align-self:stretch;
+  margin:.30rem .70rem;      /* a teeny bit tighter */
+  border-radius:2px;
+  background: rgba(255,255,255,.14); /* same gray as nav border stroke */
+  box-shadow:none;
+  pointer-events:none;
+}
+
+/* Brand & hero */
+.brand-gradient { background: linear-gradient(90deg, #FFB027, #FFE07A, #FFB027); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientx 6s ease-in-out infinite; }
+@keyframes gradientx { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+.hero-title{ font-weight:800; line-height:1.05; font-size: clamp(3rem, 7vw, 6rem); letter-spacing:-0.02em; }
+.hero-sub{ color:#d0d0d0; font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
+
+/* Buttons */
+.btn, .cta-btn, .chip, .filter-toggle, .return-btn, .card-cta, .nav-item { transition: transform .18s ease, box-shadow .18s ease; will-change: transform; }
+.btn:hover, .cta-btn:hover, .chip:hover, .filter-toggle:hover, .return-btn:hover, .card-cta:hover, .nav-item:hover { transform: translateY(-2px) scale(1.03); }
+.btn:active, .cta-btn:active, .chip:active, .filter-toggle:active, .return-btn:active, .card-cta:active, .nav-item:active { transform: translateY(0) scale(0.97); }
+.cta-btn { @apply inline-flex items-center justify-center px-6 py-3 mt-6 rounded-full font-semibold text-black border; border-color: transparent; background: linear-gradient(120deg, #FF9F1C, #FFD43B); box-shadow: 0 10px 30px rgba(255, 180, 0, .2); }
+.btn { @apply inline-flex items-center justify-center px-4 py-2 rounded-full border border-border bg-white/5; }
+.return-btn { @apply bg-white/10; }
+
+/* Forms/Cards */
+.work-card { @apply rounded-3xl border border-border bg-primary-surface/80 shadow-md; }
+.input { @apply w-full bg-black/30 border border-border rounded-xl px-4 py-2 outline-none; }
+
+/* Showcase & overlay */
+.showcase-card{ @apply relative overflow-hidden rounded-2xl border border-border bg-black/40; }
+.showcase-overlay{
+  position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:1rem;
+  background: linear-gradient(to top, rgba(0,0,0,.98) 0%, rgba(0,0,0,.75) 45%, rgba(0,0,0,0) 72%);
+  opacity:0; transition:opacity .25s ease; z-index:2; pointer-events:none;
+}
+.showcase-card:hover .showcase-overlay{ opacity:1 !important; }
+:where(.showcase-card) img{ position:relative; z-index:1; display:block; }
+.showcase-title{ text-shadow: 0 2px 10px rgba(0,0,0,.9), 0 1px 0 rgba(0,0,0,.7); }
+.showcase-desc{ text-shadow: 0 2px 8px rgba(0,0,0,.9); }
+.tag{ @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs bg-white/10 border border-border; }
+
+/* Tag filter */
+.filter-wrapper{ position:relative; z-index:1000; display:inline-block; }
+.filter-toggle{ padding:.6rem 1rem; border-radius:999px; background: rgba(20,20,20,1); border:1px solid rgba(255,255,255,.14); }
+.filter-panel{
+  position:absolute; right:0; top:100%; margin-top:.5rem;
+  background: rgba(20,20,20,.96); border:1px solid rgba(255,255,255,.14); border-radius:1rem;
+  backdrop-filter: blur(8px); box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  z-index:1005;
+}
+
+/* Custom checkbox */
+.dd-checkbox{ display:flex; align-items:center; gap:.75rem; cursor:pointer; user-select:none; }
+.dd-checkbox-box{ width:18px; height:18px; border-radius:.4rem; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.04); box-shadow: inset 0 1px 0 rgba(255,255,255,.05); display:grid; place-items:center; }
+.dd-checkbox-box svg{ opacity:0; transform:scale(.8); transition:opacity .15s ease, transform .15s ease; }
+.dd-checkbox.checked .dd-checkbox-box{ border-color:#38d39f; background:rgba(56,211,159,.12); }
+.dd-checkbox.checked .dd-checkbox-box svg{ opacity:1; transform:scale(1); }
+
+/* Reveal */
+.reveal{ opacity:0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.is-visible{ opacity:1; transform: translateY(0); }
+
+/* Page fade */
+.page-enter{ opacity:0; transform: translateY(6px); }
+.page-enter-active{ opacity:1; transform: translateY(0); transition: opacity .25s ease, transform .25s ease; }
+
+/* Tiny glow for Pricing tab */
+.nav-item.pricing{
+  text-shadow: 0 0 6px rgba(255, 210, 70, .35);
+  filter: drop-shadow(0 0 2px rgba(255, 210, 70, .18));
+}
+
+.showcase-detail .media-shell{
+  /* nice, wide player on desktop, still fits on mobile */
+  max-width: min(1280px, 96vw);
+  margin-inline: auto;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.30);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+}
+@media (min-width: 640px){
+  .showcase-detail .media-shell{ max-width: min(1400px, 92vw); }
+}
+
+/* Keep the inner frame true 16:9 and full width (works for <video> and <iframe>) */
+.showcase-detail .media-shell > .aspect-video{ width: 100%; }
+
+/* Return button – original pill/glow/feedback */
+.return-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  height: 38px;
+  padding: 0 .9rem;
+  border-radius: 999px;
+
+  color: rgba(255,255,255,.95);
+  text-decoration: none;
+
+  border: 1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(120px 60px at 50% 120%, rgba(255,200,80,.12), transparent 60%),
+    rgba(255,255,255,.04);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 8px 24px rgba(0,0,0,.25);
+
+  transition:
+    transform .15s ease,
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+.return-btn:hover{
+  transform: translateY(-1px) scale(1.04);
+  border-color: rgba(255,255,255,.22);
+}
+.return-btn:active{
+  transform: translateY(0) scale(.98);
+}
+
+/* === Showcase media: force 16:9, fill children === */
+.showcase-media{
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.showcase-media::before{
+  content:"";
+  display:block;
+  /* 9/16 = 0.5625 → 56.25% gives a 16:9 box */
+  padding-top:56.25%;
+}
+/* Make whatever is inside (Image / video / div) fill and cover */
+.showcase-media > *{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+}
