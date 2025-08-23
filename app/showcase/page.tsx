@@ -93,7 +93,7 @@ export default function ShowcasePage() {
         {filtered.length === 0 ? (
           <div className="opacity-70 py-10 text-center">No results. Try a different search or clear tags.</div>
         ) : (
-          <div className="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(440px,1fr))]">
+          <div className="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
             {filtered.map(p => (
               <ProjectCard key={p.slug} project={p} />
             ))}
