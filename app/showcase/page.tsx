@@ -168,9 +168,12 @@ function Section({
 }) {
   return (
     <section className="mb-10">
-      <div className="flex items-center gap-3 mb-4">
-        <h2 className="text-lg sm:text-xl font-semibold">{title}</h2>
-        <div className="flex-1 h-px bg-white/10" />
+      <div className="flex items-center mb-4">
+        <div className="flex-1 h-px bg-white/10" aria-hidden />
+        <h2 className="mx-3 px-3 text-base sm:text-lg font-semibold whitespace-nowrap">
+          {title}
+        </h2>
+        <div className="flex-1 h-px bg-white/10" aria-hidden />
       </div>
       {children}
     </section>
