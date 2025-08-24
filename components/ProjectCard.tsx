@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export type Project = {
   slug: string;
@@ -10,14 +10,22 @@ export type Project = {
   description: string;
   tags: string[];
   media: { source: string; poster?: string };
+  year?: number | string;                 // NEW: 4-digit year (display only; not a tag)
 };
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const { slug, title, description, media, tags } = project;
+  const { slug, title, description, media, tags, year } = project;
 
   const isVideo = /\.(mp4|webm)$/i.test(media.source);
   const [autoPoster, setAutoPoster] = useState<string | null>(null);
   const posterToUse = media.poster || autoPoster || null;
+
+  // Normalize the year to a 4-digit string if possible
+  const yearStr = useMemo(() => {
+    if (year == null) return null;
+    const y = String(year).match(/^\d{4}$/)?.[0];
+    return y ?? String(year);
+  }, [year]);
 
   // Generate a poster for local videos if none provided
   useEffect(() => {
@@ -50,10 +58,12 @@ export default function ProjectCard({ project }: { project: Project }) {
       const onSeeked = () => {
         try {
           canvas.width = video.videoWidth || 1280;
-          canvas.height = Math.round(canvas.width * 9 / 16);
+          canvas.height = Math.round((canvas.width * 9) / 16);
           ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
           if (!cancelled) setAutoPoster(canvas.toDataURL('image/jpeg', 0.72));
-        } catch {} finally {
+        } catch {
+          // ignore
+        } finally {
           cleanup();
         }
       };
@@ -90,17 +100,22 @@ export default function ProjectCard({ project }: { project: Project }) {
               priority={false}
             />
           ) : (
-            <div className="showcase-thumb absolute inset-0" style={{ background: 'linear-gradient(180deg,#222,#141414)' }} />
+            <div
+              className="showcase-thumb absolute inset-0"
+              style={{ background: 'linear-gradient(180deg,#222,#141414)' }}
+            />
           )}
         </div>
 
+        {/* Overlay */}
         <div className="showcase-overlay">
           <div className="min-w-0">
             <h3 className="font-semibold text-xl mb-1 truncate">{title}</h3>
             <p className="opacity-80 text-sm truncate">{description}</p>
 
             <div className="mt-3 flex gap-2 flex-wrap">
-              {tags.map(t => (
+              {yearStr && <span className="chip opacity-80">{yearStr}</span>}
+              {tags.map((t) => (
                 <span key={t} className="tag chip">#{t}</span>
               ))}
             </div>
