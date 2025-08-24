@@ -6,7 +6,7 @@ import ProjectCard from '../../components/ProjectCard';
 import Reveal from '../../components/Reveal';
 
 // change these to whatever top-level categories you want to show as sections
-const CATEGORY_ORDER = ['Mega Rolls', 'Combat', 'Simulator'] as const;
+const CATEGORY_ORDER = ['Simulator', 'Combat',] as const;
 type NamedCategory = typeof CATEGORY_ORDER[number];
 type CategoryKey = NamedCategory | 'Misc';
 
@@ -41,9 +41,8 @@ export default function ShowcasePage() {
   // group filtered projects into named categories, with a Misc fallback
   const groups = useMemo(() => {
     const g: Record<CategoryKey, typeof projects> = {
+      Simulator: [],
       Combat: [],
-      'Mega Rolls': [],
-      VFX: [],
       Misc: [],
     };
     filtered.forEach((p) => {
