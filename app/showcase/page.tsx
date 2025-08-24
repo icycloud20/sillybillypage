@@ -6,7 +6,7 @@ import ProjectCard from '../../components/ProjectCard';
 import Reveal from '../../components/Reveal';
 
 // change these to whatever top-level categories you want to show as sections
-const CATEGORY_ORDER = ['Combat', 'Mega Rolls', 'VFX'] as const;
+const CATEGORY_ORDER = ['Mega Rolls', 'Combat', 'Simulator'] as const;
 type NamedCategory = typeof CATEGORY_ORDER[number];
 type CategoryKey = NamedCategory | 'Misc';
 
