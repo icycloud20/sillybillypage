@@ -128,5 +128,15 @@ export const projects: Project[] = [
     media: {
       source: '/videos/cutscene.mp4',              // local file path under /public
     }
+  },
+  {
+    slug: 'puzzle-game',                              // url: /showcase/my-demo
+    title: 'Frog Puzzle System',
+    description: 'A little puzzle game inspired by the Hoppers board game.',
+    tags: [],
+    year: 2024,                    // used by filter/search
+    media: {
+      source: '/videos/puzzle-game.mp4',              // local file path under /public
+    }
   }
 ];
